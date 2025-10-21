@@ -2,6 +2,8 @@ package com.shelter.shelter.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Animal {
@@ -11,6 +13,18 @@ public class Animal {
     private String animalName;
 
     private String animalSpecies;
+
+    @ManyToOne
+    @JoinColumn(name = "shelter_id")
+    private Shelter shelter;
+
+    public Shelter getShelter() {
+        return shelter;
+    }
+
+    public void setShelter(Shelter shelter) {
+        this.shelter = shelter;
+    }
 
     public void setId(Long id) {
         this.id = id;
