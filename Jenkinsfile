@@ -1,11 +1,4 @@
 pipeline {
-    agent any
-
-    tools {
-        maven 'Maven 4.0.0'   // Make sure Jenkins has this Maven version installed (Manage Jenkins → Tools)
-        jdk 'Java 25'         // Or your project’s Java version
-    }
-
     stages {
         stage('Checkout') {
             steps {
