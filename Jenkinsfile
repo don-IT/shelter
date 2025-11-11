@@ -1,6 +1,6 @@
 pipeline {
     agent {
-            docker {
+            dockerContainer {
               image 'maven:3.3.4'
             }
     }
