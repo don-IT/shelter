@@ -6,10 +6,6 @@ pipeline {
         maven 'maven-3.4.4'    // Must match Maven tool name in Jenkins tool config
     }
 
-    environment {
-        MAVEN_OPTS = "-Dmaven.test.failure.ignore=false"
-    }
-
     stages {
         stage('Build') {
             steps {
