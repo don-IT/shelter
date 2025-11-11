@@ -1,15 +1,20 @@
 pipeline {
-    agent any
-
-    tools {
-        jdk 'jdk-21'           // Must match the name of JDK 21 in Jenkins tool config
-        maven 'maven-3.4.4'    // Must match Maven tool name in Jenkins tool config
+    agent {
+        docker {
+            image 'maven:3.9.9-eclipse-temurin-21'  // Maven + JDK 21
+            args '-v /root/.m2:/root/.m2'           // Cache für Maven-Repo
+        }
     }
 
     stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
         stage('Build') {
             steps {
-                sh 'mvn -version'
                 sh 'mvn clean compile'
             }
         }
@@ -20,7 +25,7 @@ pipeline {
             }
             post {
                 always {
-                    junit 'target/surefire-reports/*.xml'  // publish test results
+                    junit 'target/surefire-reports/*.xml'
                 }
             }
         }
@@ -34,28 +39,6 @@ pipeline {
                     archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
                 }
             }
-        }
-
-        stage('Deploy') {
-            when {
-                branch 'main'
-            }
-            steps {
-                echo "Deploying application..."
-                // Add your deployment logic here (e.g., scp, docker build, etc.)
-            }
-        }
-    }
-
-    post {
-        always {
-            echo "Pipeline completed."
-        }
-        failure {
-            echo "Build failed!"
-        }
-        success {
-            echo "Build succeeded!"
         }
     }
 }
