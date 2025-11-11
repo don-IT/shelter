@@ -1,19 +1,26 @@
 pipeline {
-    agent {
-            dockerContainer {
-              image 'maven:3.3.4'
-            }
+    agent any
+
+    tools {
+        jdk 'jdk-21'           // Must match the name of JDK 21 in Jenkins tool config
+        maven 'maven-3.4.4'    // Must match Maven tool name in Jenkins tool config
     }
+
+    environment {
+        MAVEN_OPTS = "-Dmaven.test.failure.ignore=false"
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/don-IT/shelter.git'
+                checkout scm
             }
         }
 
         stage('Build') {
             steps {
-                sh 'mvn clean install -DskipTests'
+                sh 'mvn -version'
+                sh 'mvn clean compile'
             }
         }
 
@@ -23,24 +30,42 @@ pipeline {
             }
             post {
                 always {
-                    junit '**/target/surefire-reports/*.xml'
+                    junit 'target/surefire-reports/*.xml'  // publish test results
                 }
             }
         }
 
         stage('Package') {
             steps {
-                sh 'mvn package'
+                sh 'mvn package -DskipTests'
+            }
+            post {
+                success {
+                    archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+                }
+            }
+        }
+
+        stage('Deploy') {
+            when {
+                branch 'main'
+            }
+            steps {
+                echo "Deploying application..."
+                // Add your deployment logic here (e.g., scp, docker build, etc.)
             }
         }
     }
 
     post {
-        success {
-            echo 'Build and tests completed successfully!'
+        always {
+            echo "Pipeline completed."
         }
         failure {
-            echo 'Build or tests failed!'
+            echo "Build failed!"
+        }
+        success {
+            echo "Build succeeded!"
         }
     }
 }
