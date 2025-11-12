@@ -1,33 +1,23 @@
 package com.shelter.shelter.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
+@Table(name = "shelters")
 public class Shelter {
   @Id private Long id;
 
   private String shelterName;
+  private String name;
+  private String address;
+  private String phone;
 
-  @ManyToOne
-  @JoinColumn(name = "animal_id")
-  private Animal animal;
+  @OneToMany(mappedBy = "shelter", cascade = CascadeType.ALL)
+  private List<Animal> animals;
 
-  public Shelter() {}
-
-  public Animal getAnimal() {
-    return animal;
-  }
-
-  public void setAnimal(Animal animal) {
-    this.animal = animal;
-  }
-
-  public Shelter(Animal animal) {
-    this.animal = animal;
-  }
+  @OneToMany(mappedBy = "shelter", cascade = CascadeType.ALL)
+  private List<Employee> employees;
 
   public void setId(Long id) {
     this.id = id;
@@ -43,5 +33,45 @@ public class Shelter {
 
   public void setShelterName(String shelterName) {
     this.shelterName = shelterName;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
+
+  public List<Animal> getAnimals() {
+    return animals;
+  }
+
+  public void setAnimals(List<Animal> animals) {
+    this.animals = animals;
+  }
+
+  public List<Employee> getEmployees() {
+    return employees;
+  }
+
+  public void setEmployees(List<Employee> employees) {
+    this.employees = employees;
   }
 }

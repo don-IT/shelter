@@ -1,21 +1,67 @@
 package com.shelter.shelter.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
+@Table(name = "animals")
 public class Animal {
-  @Id private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-  private String animalName;
+  private String name;
+  private String species;
+  private Integer age;
 
-  private String animalSpecies;
+  @Enumerated(EnumType.STRING)
+  private Status status; // npr. AVAILABLE, ADOPTED, PENDING
 
   @ManyToOne
   @JoinColumn(name = "shelter_id")
   private Shelter shelter;
+
+  @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL)
+  private List<MedicalCheck> medicalChecks;
+
+  @ManyToMany
+  @JoinTable(
+      name = "adoptions",
+      joinColumns = @JoinColumn(name = "animal_id"),
+      inverseJoinColumns = @JoinColumn(name = "adopter_id"))
+  private List<Adopter> adopters;
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getSpecies() {
+    return species;
+  }
+
+  public void setSpecies(String species) {
+    this.species = species;
+  }
+
+  public Integer getAge() {
+    return age;
+  }
+
+  public void setAge(Integer age) {
+    this.age = age;
+  }
+
+  public Status getStatus() {
+    return status;
+  }
+
+  public void setStatus(Status status) {
+    this.status = status;
+  }
 
   public Shelter getShelter() {
     return shelter;
@@ -25,27 +71,19 @@ public class Animal {
     this.shelter = shelter;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public List<MedicalCheck> getMedicalChecks() {
+    return medicalChecks;
   }
 
-  public Long getId() {
-    return id;
+  public void setMedicalChecks(List<MedicalCheck> medicalChecks) {
+    this.medicalChecks = medicalChecks;
   }
 
-  public String getAnimalName() {
-    return animalName;
+  public List<Adopter> getAdopters() {
+    return adopters;
   }
 
-  public void setAnimalName(String animalName) {
-    this.animalName = animalName;
-  }
-
-  public String getAnimalSpecies() {
-    return animalSpecies;
-  }
-
-  public void setAnimalSpecies(String animalSpecies) {
-    this.animalSpecies = animalSpecies;
+  public void setAdopters(List<Adopter> adopters) {
+    this.adopters = adopters;
   }
 }

@@ -1,36 +1,54 @@
 package com.shelter.shelter.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
+@Table(name = "employees")
 public class Employee {
-  @Id private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-  private String firstName;
-  private String lastName;
+  private String name;
+  private String role; // npr. Vet, Caretaker
 
-  public void setId(Long id) {
-    this.id = id;
+  @ManyToOne
+  @JoinColumn(name = "shelter_id")
+  private Shelter shelter;
+
+  @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+  private List<MedicalCheck> medicalChecks;
+
+  public String getName() {
+    return name;
   }
 
-  public Long getId() {
-    return id;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public String getFirstName() {
-    return firstName;
+  public String getRole() {
+    return role;
   }
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
+  public void setRole(String role) {
+    this.role = role;
   }
 
-  public String getLastName() {
-    return lastName;
+  public Shelter getShelter() {
+    return shelter;
   }
 
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
+  public void setShelter(Shelter shelter) {
+    this.shelter = shelter;
+  }
+
+  public List<MedicalCheck> getMedicalChecks() {
+    return medicalChecks;
+  }
+
+  public void setMedicalChecks(List<MedicalCheck> medicalChecks) {
+    this.medicalChecks = medicalChecks;
   }
 }
