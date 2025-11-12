@@ -1,10 +1,11 @@
 pipeline {
     agent {
         docker {
-            image 'maven:3.9.9-eclipse-temurin-21'  // Maven + JDK 21
-            args '-v /root/.m2:/root/.m2'           // Cache für Maven-Repo
+            image 'maven:3.9.9-eclipse-temurin-21'
+            args '-w /var/jenkins_home/workspace/shelter-new'
         }
     }
+
 
     stages {
         stage('Checkout') {
