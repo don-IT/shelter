@@ -6,11 +6,26 @@ pipeline {
         }
     }
 
+    environment {
+        MAVEN_OPTS = '-Dmaven.repo.local=.m2/repository'
+    }
 
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
+            }
+        }
+
+        stage('Code Format Check') {
+            steps {
+                echo '🔍 Checking Java code format with Spotless...'
+                sh 'mvn spotless:check'
+            }
+            post {
+                failure {
+                    echo '❌ Spotless check failed. Please run "mvn spotless:apply" locally to fix formatting.'
+                }
             }
         }
 
@@ -40,6 +55,19 @@ pipeline {
                     archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
                 }
             }
+        }
+    }
+
+    post {
+        always {
+            echo '🧹 Cleaning workspace...'
+            cleanWs()
+        }
+        success {
+            echo '✅ Build completed successfully with Spotless formatting check passed!'
+        }
+        failure {
+            echo '❌ Build failed — check Spotless or test results.'
         }
     }
 }
