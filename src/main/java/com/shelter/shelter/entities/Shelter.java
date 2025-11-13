@@ -8,7 +8,6 @@ import java.util.List;
 public class Shelter {
   @Id private Long id;
 
-  private String shelterName;
   private String name;
   private String address;
   private String phone;
@@ -25,14 +24,6 @@ public class Shelter {
 
   public Long getId() {
     return id;
-  }
-
-  public String getShelterName() {
-    return shelterName;
-  }
-
-  public void setShelterName(String shelterName) {
-    this.shelterName = shelterName;
   }
 
   public String getName() {
