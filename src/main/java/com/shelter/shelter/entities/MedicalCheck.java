@@ -2,8 +2,12 @@ package com.shelter.shelter.entities;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Setter
+@Getter
 @Table(name = "medical_checks")
 public class MedicalCheck {
 
@@ -21,22 +25,4 @@ public class MedicalCheck {
   @ManyToOne
   @JoinColumn(name = "employee_id")
   private Employee employee;
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public LocalDate getDate() {
-    return date;
-  }
-
-  public void setDate(LocalDate date) {
-    this.date = date;
-  }
-
-  // Getters and Setters
 }

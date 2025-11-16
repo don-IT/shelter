@@ -2,7 +2,11 @@ package com.shelter.shelter.entities;
 
 import jakarta.persistence.*;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "adopters")
 public class Adopter {
@@ -17,28 +21,4 @@ public class Adopter {
 
   @ManyToMany(mappedBy = "adopters")
   private List<Animal> animals;
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getContact() {
-    return contact;
-  }
-
-  public void setContact(String contact) {
-    this.contact = contact;
-  }
-
-  public String getCity() {
-    return city;
-  }
-
-  public void setCity(String city) {
-    this.city = city;
-  }
 }
