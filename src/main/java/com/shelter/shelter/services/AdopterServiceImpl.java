@@ -4,6 +4,7 @@ import com.shelter.shelter.entities.Adopter;
 import com.shelter.shelter.entities.Animal;
 import com.shelter.shelter.repositories.AdopterRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,8 +16,6 @@ public class AdopterServiceImpl implements AdopterService {
   }
 
   /**
-   * @param adopter
-   * @return
    */
   @Override
   public Adopter createAdopter(Adopter adopter) {
@@ -24,28 +23,23 @@ public class AdopterServiceImpl implements AdopterService {
   }
 
   /**
-   * @param id
-   * @return
    */
   @Override
-  public Adopter getAdopter(Long id) {
-    return null;
+  public Optional<Adopter> getAdopter(Long id) {
+    return Optional.of(adopterRepository.findById(id)).orElse(null);
   }
 
   /**
-   * @return
    */
   @Override
   public List<Adopter> getAllAdopters() {
-    return List.of();
+    return adopterRepository.findAll();
   }
 
   /**
-   * @param adopterId
-   * @return
    */
   @Override
   public List<Animal> getAdoptedAnimals(Long adopterId) {
-    return List.of();
+    return adopterRepository.findAnimalsByAdopter(adopterId);
   }
 }
