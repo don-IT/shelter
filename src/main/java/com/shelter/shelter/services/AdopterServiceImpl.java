@@ -20,7 +20,7 @@ public class AdopterServiceImpl implements AdopterService {
 
   @Override
   public Optional<Adopter> getAdopter(Long id) {
-    return Optional.of(adopterRepository.findById(id)).orElse(null);
+    return adopterRepository.findById(id);
   }
 
   @Override

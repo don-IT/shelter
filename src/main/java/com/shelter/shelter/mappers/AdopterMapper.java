@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 @Mapper
 public interface AdopterMapper {
-  Adopter adopterToAdopter(Adopter adopter);
+  Adopter adopterDTOToAdopter(AdopterDTO adopter);
 
   AdopterDTO adopterToAdopterDTO(Adopter adopter);
 }
