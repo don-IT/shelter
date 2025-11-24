@@ -1,9 +1,10 @@
 package com.shelter.shelter.entities;
 
 import jakarta.persistence.*;
-import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Setter
@@ -15,7 +16,7 @@ public class Employee {
   private Long id;
 
   private String name;
-  private String role; // npr. Vet, Caretaker
+  private String role;
 
   @ManyToOne
   @JoinColumn(name = "shelter_id")

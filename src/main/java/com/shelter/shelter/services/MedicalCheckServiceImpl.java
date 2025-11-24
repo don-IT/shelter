@@ -1,33 +1,28 @@
 package com.shelter.shelter.services;
 
 import com.shelter.shelter.entities.MedicalCheck;
+import com.shelter.shelter.repositories.MedicalCheckRepository;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
+@RequiredArgsConstructor
 public class MedicalCheckServiceImpl implements MedicalCheckService {
-  /**
-   * @param check
-   * @return
-   */
+  private final MedicalCheckRepository medicalCheckRepository;
+
   @Override
   public MedicalCheck createCheck(MedicalCheck check) {
-    return null;
+    return medicalCheckRepository.save(check);
   }
 
-  /**
-   * @param animalId
-   * @return
-   */
   @Override
   public List<MedicalCheck> getChecksForAnimal(Long animalId) {
-    return List.of();
+    return medicalCheckRepository.findByAnimal_Id(animalId);
   }
 
-  /**
-   * @param employeeId
-   * @return
-   */
   @Override
   public List<MedicalCheck> getChecksByEmployee(Long employeeId) {
-    return List.of();
+    return medicalCheckRepository.findByEmployee_Id(employeeId);
   }
 }

@@ -20,6 +20,7 @@ public class AnimalServiceImpl implements AnimalService {
   }
 
   @Override
+  @Transactional
   public Animal updateAnimal(Long id, Animal updated) {
     var optionalAnimal = animalRepository.findById(id);
     if (optionalAnimal.isEmpty()) {
@@ -62,6 +63,7 @@ public class AnimalServiceImpl implements AnimalService {
   }
 
   @Override
+  @Transactional
   public Animal updateStatus(Long animalId, Status status) {
     animalRepository.findById(animalId).ifPresent(a -> a.setStatus(status));
     return animalRepository.findById(animalId).orElse(null);

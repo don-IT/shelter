@@ -2,51 +2,50 @@ package com.shelter.shelter.services;
 
 import com.shelter.shelter.entities.Employee;
 import com.shelter.shelter.entities.MedicalCheck;
+import com.shelter.shelter.repositories.EmployeeRepository;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service
+@RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
-  /**
-   * @param employee
-   * @return
-   */
+  private final EmployeeRepository employeeRepository;
+
   @Override
   public Employee createEmployee(Employee employee) {
-    return null;
+    return employeeRepository.save(employee);
   }
 
-  /**
-   * @param id
-   * @param updated
-   * @return
-   */
   @Override
+  @Transactional
   public Employee updateEmployee(Long id, Employee updated) {
-    return null;
+    return employeeRepository
+        .findById(id)
+        .map(
+            existing -> {
+              existing.setName(updated.getName());
+              existing.setRole(updated.getRole());
+              existing.setShelter(updated.getShelter());
+              existing.setMedicalChecks(updated.getMedicalChecks());
+              return employeeRepository.save(existing);
+            })
+        .orElse(null);
   }
 
-  /**
-   * @param id
-   * @return
-   */
   @Override
   public Employee getEmployee(Long id) {
-    return null;
+    return employeeRepository.findById(id).orElse(null);
   }
 
-  /**
-   * @return
-   */
   @Override
   public List<Employee> getEmployees() {
-    return List.of();
+    return employeeRepository.findAll();
   }
 
-  /**
-   * @param employeeId
-   * @return
-   */
   @Override
   public List<MedicalCheck> getMedicalChecksByEmployee(Long employeeId) {
-    return List.of();
+    return employeeRepository.findMedicalChecksByEmployeeId(employeeId);
   }
 }
