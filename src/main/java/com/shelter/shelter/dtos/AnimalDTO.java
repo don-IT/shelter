@@ -5,9 +5,15 @@ import com.shelter.shelter.entities.MedicalCheck;
 import com.shelter.shelter.entities.Shelter;
 import com.shelter.shelter.entities.Status;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AnimalDTO {
   private Long id;
   private String name;

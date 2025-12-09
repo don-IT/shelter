@@ -26,7 +26,9 @@ public class AnimalController {
     var saved = animalService.createAnimal(animal);
 
     log.info("Animal created with ID: {}", saved.getId());
-    return ResponseEntity.ok(animalMapper.animalToAnimalDTO(saved));
+    var dto = animalMapper.animalToAnimalDTO(saved);
+    log.info("Sending request body: {}", dto);
+    return ResponseEntity.ok(dto);
   }
 
   @GetMapping("/{id}")

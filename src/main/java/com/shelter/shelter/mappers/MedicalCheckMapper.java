@@ -4,7 +4,7 @@ import com.shelter.shelter.dtos.MedicalCheckDTO;
 import com.shelter.shelter.entities.MedicalCheck;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface MedicalCheckMapper {
   MedicalCheckDTO medicalCheckToMedicalCheckDTO(MedicalCheck medicalCheck);
 

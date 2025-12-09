@@ -4,8 +4,9 @@ import com.shelter.shelter.dtos.AdopterDTO;
 import com.shelter.shelter.entities.Adopter;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface AdopterMapper {
+
   Adopter adopterDTOToAdopter(AdopterDTO adopter);
 
   AdopterDTO adopterToAdopterDTO(Adopter adopter);
